@@ -65,13 +65,6 @@ public class Board {
 	public void setInsertTime(LocalDate insertTime) {
 		this.insertTime = insertTime;
 	}
-	public boolean isNotice() {
-		return notice;
-	}
-	public void setNotice(boolean notice) {
-		this.notice = notice;
-	}
-	private boolean notice;   //공지사항 여부
 	
 
 }

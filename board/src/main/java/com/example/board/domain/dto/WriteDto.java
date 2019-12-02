@@ -1,9 +1,5 @@
 package com.example.board.domain.dto;
 
-import java.time.LocalDate;
-
-import com.example.board.domain.entity.User;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,17 +9,16 @@ import lombok.Setter;
 @NoArgsConstructor
 public class WriteDto {
 
-	private User user;
+	private String identity; //작성자 아이디
 	private String title;   // 제목
-	private String contents;   // 내용
-	private LocalDate insertTime;   //작성일
+	private String contents;   // 내용	
 	
 	
-	public User getUser() {
-		return user;
+	public String getIdentity() {
+		return identity;
 	}
-	public void setUser(User user) {
-		this.user = user;
+	public void setIdentity(String identity) {
+		this.identity = identity;
 	}
 	public String getTitle() {
 		return title;
@@ -37,12 +32,8 @@ public class WriteDto {
 	public void setContents(String contents) {
 		this.contents = contents;
 	}
-	public LocalDate getInsertTime() {
-		return insertTime;
-	}
-	public void setInsertTime(LocalDate insertTime) {
-		this.insertTime = insertTime;
-	}
+
+
 
 	
 }
