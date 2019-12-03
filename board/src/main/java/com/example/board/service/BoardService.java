@@ -79,7 +79,7 @@ public class BoardService {
 	//read 게시글전체 조회
 	public List<GetBoardDto> getAllBoard() {
 		List<Board> getBoard = boardRepository.findAll();
-		List<GetBoardDto> getBoardAll = new ArrayList<>();;
+		List<GetBoardDto> getBoardAll = new ArrayList<>();
 		User user;
 		GetBoardDto element;
 		
@@ -101,7 +101,27 @@ public class BoardService {
 	}
 
 	//read 작성자 별 게시글 조회
-	//	public void getBoardByUserId
+	public List<GetBoardDto> getBoardByUserIdentity (String identity) {
+		User user = userRepository.findByIdentity(identity);
+		List<Board> getBoard = boardRepository.findAllByUser(user);		
+		List<GetBoardDto> getBoardToUser = new ArrayList<>();
+		GetBoardDto element;
+		
+		int size = getBoard.size();
+		
+		for(int i=0; i<size; i++) {
+			element = new GetBoardDto();
+			
+			element.setTitle(getBoard.get(i).getTitle());
+			element.setContents(getBoard.get(i).getContents());
+			element.setInsertTime(getBoard.get(i).getInsertTime());
+			element.setIdentity(identity);
+			
+			getBoardToUser.add(element);
+		}		
+		
+		return getBoardToUser;
+	}
 	
 	
 	

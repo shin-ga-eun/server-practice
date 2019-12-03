@@ -55,4 +55,10 @@ public class BoardController {
 		return boardService.getAllBoard();
 	}
 	
+	//작성자 게시물 전체 조회
+	@RequestMapping(value="/userboardread/{identity}",method=RequestMethod.GET)
+	public List<GetBoardDto> getBoardByUserIdentity (@PathVariable String identity) {
+		return boardService.getBoardByUserIdentity(identity);
+	}
+	
 }
