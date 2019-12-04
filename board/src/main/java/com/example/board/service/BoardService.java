@@ -45,27 +45,35 @@ public class BoardService {
 	}
 	
 	//update
-	public void updateBoard(BoardUpdateDto boardupdatedto) {
-		User user = userRepository.findByIdentity(boardupdatedto.getIdentity());
-		Board board = boardRepository.findByUser(user);
+	public void updateBoard(BoardUpdateDto boardUpdateDto) {
+		Board board = boardRepository.findById(boardUpdateDto.getId()).get();
 		
-		board.setTitle(boardupdatedto.getTitle());
-		board.setContents(boardupdatedto.getContents());
+		if(board.getUser().getIdentity().equals(boardUpdateDto.getIdentity())) {
+		
+			board.setTitle(boardUpdateDto.getTitle());
+			board.setContents(boardUpdateDto.getContents());
+			
+		}
 		
 		boardRepository.save(board);
+		
 	}
 		
 	//delete
-	public void deleteBoard(BoardDeleteDto boarddeletedto) {
-		User user = userRepository.findByIdentity(boarddeletedto.getIdentity());
-		Board board = boardRepository.findByUser(user);
+	public void deleteBoard(BoardDeleteDto boardDeleteDto) {
+		Board board = boardRepository.findById(boardDeleteDto.getId()).get();
 		
-		boardRepository.delete(board);
+		if(board.getUser().getIdentity().equals(boardDeleteDto.getIdentity())){
+			
+			boardRepository.delete(board);
+		}
 	}
 	
 	//read 게시글번호로 게시글하나 조회
 	public GetBoardDto getBoardById(Long id) {
+		
 		Board board = boardRepository.findById(id).get();
+		
 		GetBoardDto getBoard = new GetBoardDto();
 		
 		getBoard.setTitle(board.getTitle());
@@ -102,15 +110,16 @@ public class BoardService {
 
 	//read 작성자 별 게시글 조회
 	public List<GetBoardDto> getBoardByUserIdentity (String identity) {
-		User user = userRepository.findByIdentity(identity);
-		List<Board> getBoard = boardRepository.findAllByUser(user);		
+//		User user = userRepository.findByIdentity(identity);
+		List<Board> getBoard = boardRepository.findByUserIdentity(identity);		
 		List<GetBoardDto> getBoardToUser = new ArrayList<>();
-		GetBoardDto element;
+		
 		
 		int size = getBoard.size();
 		
-		for(int i=0; i<size; i++) {
-			element = new GetBoardDto();
+		for(int i=0; i< getBoard.size(); i++) {
+			
+			GetBoardDto element = new GetBoardDto();
 			
 			element.setTitle(getBoard.get(i).getTitle());
 			element.setContents(getBoard.get(i).getContents());
@@ -118,10 +127,12 @@ public class BoardService {
 			element.setIdentity(identity);
 			
 			getBoardToUser.add(element);
+		
 		}		
 		
 		return getBoardToUser;
 	}
+	
 	
 	
 	

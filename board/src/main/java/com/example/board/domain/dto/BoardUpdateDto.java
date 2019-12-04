@@ -7,10 +7,17 @@ import lombok.Setter;
 @Setter
 public class BoardUpdateDto {
 
+		private Long id; //게시판 넘버
 	    private String title;   // 제목
 	    private String contents;   // 내용
 	    private String identity;   // 작성자 -> 이걸로 findBy해서 사용할 예정
 	   
+		public Long getId() {
+			return id;
+		}
+		public void setId(Long id) {
+			this.id = id;
+		}
 		public String getTitle() {
 			return title;
 		}
